@@ -27,4 +27,4 @@
 
 ## 狀態
 
-僅本機完成，未發布。
+已發布（2026-10-10）：https://lushinshang.github.io/idcf-ransomware/

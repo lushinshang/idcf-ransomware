@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>雲端房東被打掛，房客的資料呢？</title>
+<meta name="description" content="IDC Frontier（IDCF Cloud）勒索軟體事件導讀">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="IDCF 事件導讀">
+<meta property="og:title" content="雲端房東被打掛，房客的資料呢？">
+<meta property="og:description" content="IDC Frontier（IDCF Cloud）勒索軟體事件導讀">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="雲端房東被打掛，房客的資料呢？">
+<meta name="twitter:description" content="IDC Frontier（IDCF Cloud）勒索軟體事件導讀">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%231f5f8b'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://lushinshang.github.io/idcf-ransomware/">
+<meta property="og:url" content="https://lushinshang.github.io/idcf-ransomware/">
+<meta property="og:image" content="https://lushinshang.github.io/idcf-ransomware/images/01-summary.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1672">
+<meta property="og:image:height" content="941">
+<meta property="og:image:alt" content="IDCF 勒索事件一圖看懂">
+<meta name="twitter:image" content="https://lushinshang.github.io/idcf-ransomware/images/01-summary.png">
+<style>
+:root{--bg:#f7f6f3;--card:#fff;--text:#1d1d1f;--sub:#5b5b60;--accent:#1f5f8b;--soft:#e8f0f6;--line:#e3dfd7;--code:#efece5;--w:720px}
+@media (prefers-color-scheme:dark){:root{--bg:#16171a;--card:#1f2024;--text:#ececee;--sub:#a3a3aa;--accent:#7ab8e0;--soft:#1b2630;--line:#33343a;--code:#26272c}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--text);font:17px/1.85 "Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#fff;padding:8px 14px;z-index:200}
+.skip:focus{left:8px;top:8px}
+nav.top{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top .in{scrollbar-width:none;max-width:960px;margin:0 auto;padding:10px 16px;display:flex;gap:18px;align-items:center;overflow-x:auto;white-space:nowrap}
+nav.top b{font-size:14px;color:var(--text)}
+nav.top a{font-size:14px;color:var(--sub);text-decoration:none;padding:6px 2px}
+nav.top a:hover,nav.top a:focus-visible{color:var(--accent)}
+header.hero{max-width:var(--w);margin:0 auto;padding:56px 16px 20px}
+.tag{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.5px;color:var(--accent);background:var(--soft);padding:3px 10px;border-radius:4px;margin-bottom:16px}
+h1{font-size:clamp(26px,5.4vw,38px);line-height:1.35;font-weight:800;margin-bottom:12px}
+.sub{color:var(--sub);font-size:18px;line-height:1.6}
+.meta{margin-top:16px;font-size:14px;color:var(--sub)}
+main{max-width:var(--w);margin:0 auto;padding:8px 16px 96px}
+main h2{font-size:26px;line-height:1.4;margin:56px 0 14px;padding-top:8px;border-top:1px solid var(--line)}
+main h2,main h3{scroll-margin-top:64px}
+main h3{font-size:20px;line-height:1.45;margin:32px 0 8px}
+main p{margin:14px 0}
+main ul,main ol{margin:14px 0 14px 1.4em}
+main li{margin:6px 0}
+main a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere}
+main strong{font-weight:700}
+code{background:var(--code);padding:1px 6px;border-radius:4px;font-size:.92em;overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.table-wrap:focus-visible{outline:2px solid var(--accent)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px;line-height:1.65}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:var(--soft);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+pre.mermaid{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:24px 0;overflow-x:auto;font:13px/1.5 ui-monospace,Menlo,monospace;text-align:center;white-space:pre}
+pre.mermaid[data-processed]{white-space:normal}
+pre.mermaid svg{max-width:none;height:auto;min-width:640px}
+@media (min-width:760px){pre.mermaid svg{min-width:0;max-width:100%}}
+pre.mermaid:focus-visible{outline:2px solid var(--accent)}
+figure{margin:28px 0}
+figure img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:1px solid var(--line);cursor:zoom-in}
+figure.summary-figure img{box-shadow:0 6px 24px rgba(0,0,0,.08)}
+figure.hero-figure{max-width:var(--w);margin:24px auto 0;padding:0 16px}
+figure.hero-figure img{cursor:default;border:0}
+img:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:640px){figure img{aspect-ratio:9/16;max-width:360px;margin:0 auto}}
+details.alt-diagram{margin:16px 0}
+details.alt-diagram summary{cursor:pointer;color:var(--sub);font-size:14px;padding:6px 0}
+.lightbox{display:none;position:fixed;inset:0;z-index:200;background:rgba(20,20,22,.9);align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:96vw;max-height:92vh;width:auto;height:auto;aspect-ratio:auto;border-radius:8px;border:0;cursor:zoom-out}
+.lightbox .hint{position:absolute;top:16px;right:20px;color:rgba(255,255,255,.8);font-size:14px}
+footer{max-width:var(--w);margin:0 auto;padding:0 16px 56px;color:var(--sub);font-size:14px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">跳到內文</a>
+<nav class="top" aria-label="章節導覽"><div class="in"><b>IDCF 事件導讀</b>
+<a href="#先把事實排好">先把事實排好</a>
+<a href="#時間軸">時間軸</a>
+<a href="#攻擊者說了什麼哪些能信">攻擊者說了什麼，哪些能信</a>
+<a href="#攻擊鏈已知與未知">攻擊鏈：已知與未知</a>
+<a href="#受害者的樣子">受害者的樣子</a>
+<a href="#想求償法律上不容易">想求償？法律上不容易</a>
+<a href="#這件事帶走什麼">這件事帶走什麼</a>
+<a href="#還沒有答案的事">還沒有答案的事</a>
+<a href="#來源">來源</a>
+</div></nav>
+<header class="hero">
+<span class="tag">資安事件導讀 · 2026-10-10</span>
+<h1>雲端房東被打掛，房客的資料呢？</h1>
+<p class="sub">IDC Frontier（IDCF Cloud）勒索軟體事件導讀</p>
+<p class="meta">依據 IDC Frontier 第 1–4 報、客戶公告與媒體報導整理（基準日 2026-10-10）。法規與防禦建議為本文整理，非法律意見。</p>
+</header>
+<figure class="hero-figure"><picture><source media="(max-width: 640px)" srcset="images/06-cover-mobile.png"><img src="images/06-cover.png" alt="" role="presentation" loading="lazy" decoding="async" tabindex="0"></picture></figure>
+
+<main id="content">
+<p>2026 年 10 月 7 日清晨 3 點 40 分左右，日本軟銀（SoftBank）旗下的雲端業者 IDC Frontier（IDCF）開始出事，客戶的虛擬伺服器停止，也無法重新啟動。當天 IDCF 公告原因：<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261007002">第三方的勒索軟體攻擊</a>。</p>
+<p>隔天的第 3 報給出最重的一句：四個區域（zone）裡的客戶資料「取出與復原的前景困難」，IDCF 目前的見解是<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261008001">只能靠客戶自己手上的備份</a>。截至 10 月 10 日，官方還沒有公布復原時程。</p>
+<figure class="summary-figure"><picture><source media="(max-width: 640px)" srcset="images/01-summary-mobile.png"><img src="images/01-summary.png" alt="一圖看懂：10 月 7 日 03:40 左右東日本 Region 1 障害；官方確認勒索軟體攻擊、四個 zone 資料難以復原；495 家契約企業與自治體；入侵路徑、資料外洩、攻擊者數字尚未確認；租戶應把備份放在生產環境之外並演練還原" loading="lazy" decoding="async" tabindex="0"></picture></figure>
+<h2 id="先把事實排好">先把事實排好</h2>
+<p>下表只放 IDCF 自己在公告裡寫的內容，每一列都能回到<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/">第 1 至第 4 報</a>核對。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可橫向捲動的表格"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>項目</th>
+<th>官方說法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>發生時間</td>
+<td>2026 年 10 月 7 日（三）上午 3 點 40 分左右，公告時仍在持續</td>
+</tr>
+<tr>
+<td>受害產品</td>
+<td>IDCF Cloud 東日本 Region 1 的一部分</td>
+</tr>
+<tr>
+<td>受害的四個 zone</td>
+<td><code>tesla</code>、<code>henry</code>、<code>pascal</code>、<code>joule</code></td>
+</tr>
+<tr>
+<td>現象</td>
+<td>虛擬伺服器停止、無法重新啟動</td>
+</tr>
+<tr>
+<td>原因</td>
+<td>第三方的勒索軟體攻擊（第 2 報確認；第 1 報只寫「不正存取」）</td>
+</tr>
+<tr>
+<td>影響範圍</td>
+<td>公告列的是「契約 IDCF Cloud 的 495 家企業與自治體」</td>
+</tr>
+<tr>
+<td>資料前景</td>
+<td>四個 zone 的客戶資料「取出與復原困難」；「現時點」的見解是只能靠客戶自備的備份</td>
+</tr>
+<tr>
+<td>未確認受害</td>
+<td><code>radian</code>、<code>newton</code> 兩個 zone，以及東日本 Region 2、3 和西日本 Region 1，目前未確認有不正存取；但 IDCF 仍請這些客戶自行備份，並陸續提供備份方法</td>
+</tr>
+<tr>
+<td>不在事件範圍內</td>
+<td>IDCF Cloud TypeS（舊名 ASPIRE）與 IDCF 私有雲</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>495 是契約客戶數，不是「確定資料被毀的客戶數」。</strong> 第 2 報把它列在「影響範圍」底下，措辭是「契約 IDCF Cloud 的 495 家企業與自治體」。第 3 報的「對象」欄只列了 Region 1 的四個 zone，並說其他 zone 與 region 未確認有不正存取。所以 495 看起來是「需要個別聯絡的客戶總數」，實際資料出問題的，應該只是其中用到那四個 zone 的一部分，但官方沒有公布細分。</p>
+<p><strong>「Region 1 在福島白河」是二手轉述。</strong> 報導引用 IDCF 的規格頁，指東日本 Region 1 到 3 都在<a target="_blank" rel="noopener noreferrer" href="https://innovatopia.jp/cyber-security/cyber-security-news/118700/">福島白河資料中心</a>。這點不影響事件判讀，但寫「受害的就是白河那一座」就過頭了。</p>
+<h2 id="時間軸">時間軸</h2>
+<figure class="section-figure"><picture><source media="(max-width: 640px)" srcset="images/02-timeline-mobile.png"><img src="images/02-timeline.png" alt="事件時間軸：10 月 7 日 03:40 障害發生；10 月 7 日第 1 報不正存取、第 2 報確認為勒索軟體；10 月 7 日 09:00 設立緊急對策本部；10 月 8 日第 3 報四個 zone 資料難以復原；10 月 9 日第 4 報軟銀法人部門當窗口" loading="lazy" decoding="async" tabindex="0"></picture></figure>
+<details class="alt-diagram"><summary>檢視可互動的文字版流程圖</summary><pre class="mermaid" tabindex="0" role="img" aria-label="事件時間軸流程圖">flowchart TD
+    A[&quot;10/7 03:40&lt;br&gt;東日本 Region 1 開始出現障害&quot;] --&gt; B[&quot;10/7&lt;br&gt;第 1 報：不正存取&lt;br&gt;第 2 報：確認為勒索軟體&quot;]
+    B --&gt; C[&quot;10/7 09:00&lt;br&gt;設立緊急對策本部&lt;br&gt;與軟銀聯手&quot;]
+    C --&gt; D[&quot;10/8 第 3 報&lt;br&gt;四個 zone 資料恐難復原&lt;br&gt;建議客戶用自備備份重建&quot;]
+    D --&gt; E[&quot;10/9 第 4 報&lt;br&gt;軟銀法人部門當窗口&lt;br&gt;外部資安公司協助調查&quot;]
+    E --&gt; F[&quot;10/9 起&lt;br&gt;各家客戶陸續公告影響&quot;]</pre></details>
+<p>幾個細節：</p>
+<ul>
+<li><strong>斷網與停機</strong>：第 2 報說 Region 1 已經<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261007002">從網路切斷、系統停止</a>。其他 region 的客戶管理主控台也一併停掉，等確認安全才恢復。這是為了防止擴大，不代表其他 region 出事。</li>
+<li><strong>客戶服務</strong>：主控台停用期間，IDCF 受客戶要求代為開機、關機。<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261009001">第 4 報</a>說窗口是軟銀的法人部門，也提供備份步驟指引與遷移環境的提案。</li>
+<li><strong>調查</strong>：IDCF 與外部資安公司合作調查，也已向監督省廳和警視廳報告。入侵路徑仍在查。</li>
+</ul>
+<h2 id="攻擊者說了什麼哪些能信">攻擊者說了什麼，哪些能信</h2>
+<p><strong>攻擊者的畫面和數字，不是官方確認的事實。</strong></p>
+<p>媒體報導與社群流傳的截圖裡，有一段類似「雲端被我們接管」的訊息，還說只花了 7 分鐘就攻下 Region 1。BleepingComputer 的報導也<a target="_blank" rel="noopener noreferrer" href="https://www.bleepingcomputer.com/news/security/ransomware-attack-disrupts-japans-idcf-cloud-used-by-govt-clients/">提到這段說法</a>。IDCF 表示已掌握攻擊者聲明的存在，真偽還在調查，官方沒有認可任何一個數字，見 <a target="_blank" rel="noopener noreferrer" href="https://innovatopia.jp/cyber-security/cyber-security-news/118700/">innovatopia 的整理</a>。</p>
+<p>另有一組更精細的數字在流傳，包括 239 台 hypervisor、225 個 datastore、約 3.6 PB、16,600 多個虛擬磁碟、554,153 筆快照、41.5 PB 備份。<strong>這組數字沒有公開的原始來源，也沒有官方認可，請不要當成事實引用。</strong></p>
+<h3 id="數字本身站得住嗎">數字本身站得住嗎</h3>
+<p>如果「7 分鐘加密 3.6 PB」是真的，等於 3.6 PB ÷ 420 秒，約 8.6 TB/s 的總寫入量，攤到 225 個 datastore 每個約 38 GB/s，遠超一般儲存陣列的水準。有人因此推測攻擊者採用的是只破壞虛擬磁碟檔頭或間隔區塊的間歇式（部分）加密。</p>
+<p>這是本文依攻擊者數字做的算術推論。<strong>官方沒有公布加密手法，也沒有鑑識報告</strong>；數字若是誇大，推論就不成立。</p>
+<h3 id="誰幹的">誰幹的？</h3>
+<p>截至 10 月 10 日，沒有主流勒索軟體集團在洩露網站公開認領，也沒有公開的談判管道、贖金金額或錢包地址。坊間有「刻意羞辱」、「假旗行動」之類的猜測，沒有證據支撐。</p>
+<h2 id="攻擊鏈已知與未知">攻擊鏈：已知與未知</h2>
+<p>官方沒有公布入侵路徑，所以完整的攻擊鏈畫不出來。下面把每一環標上證據強度：藍框是官方確認，黃框是攻擊者聲稱，灰框是未知或未確認；虛線箭頭表示先後順序只是推論。</p>
+<figure class="section-figure"><picture><source media="(max-width: 640px)" srcset="images/03-attack-chain-mobile.png"><img src="images/03-attack-chain.png" alt="攻擊鏈：初始入侵未公布；取得管理權為攻擊者聲稱；部署勒索軟體、虛擬機停止、連鎖影響 495 家客戶為官方確認；備份被破壞為攻擊者聲稱" loading="lazy" decoding="async" tabindex="0"></picture></figure>
+<details class="alt-diagram"><summary>檢視可互動的文字版流程圖</summary><pre class="mermaid" tabindex="0" role="img" aria-label="攻擊鏈：已知與未知，依證據強度標示">flowchart TD
+    S1[&quot;1 初始入侵&lt;br&gt;入侵路徑與漏洞：未公布，調查中&quot;]:::unknown
+    S2[&quot;2 取得雲端管理權&lt;br&gt;攻擊者聲稱「接管基礎設施」&lt;br&gt;官方未證實&quot;]:::claim
+    S3[&quot;3 部署勒索軟體&lt;br&gt;官方確認：第三方勒索軟體攻擊&quot;]:::confirmed
+    S4[&quot;4 虛擬機停止、無法重啟&lt;br&gt;官方確認：Region 1 的四個 zone&quot;]:::confirmed
+    S5[&quot;5 備份與快照被破壞&lt;br&gt;攻擊者聲稱已清除&lt;br&gt;官方：資料取出、復原困難&quot;]:::claim
+    S6[&quot;6 連鎖影響租戶&lt;br&gt;官方：495 家契約客戶列入影響範圍&lt;br&gt;JR 東日本等委外服務受波及&quot;]:::confirmed
+    S7[&quot;資料外洩？&lt;br&gt;官方與 JR 東日本皆未確認，&lt;br&gt;只說無法否定被閱覽或取得&quot;]:::unknown
+    R[&quot;防守方應變（官方）&lt;br&gt;斷網、停機、其他 region 主控台停用&lt;br&gt;設緊急對策本部、外部資安公司調查、報警&quot;]:::confirmed
+    S1 -.-&gt; S2 -.-&gt; S3 --&gt; S4 --&gt; S6
+    S3 -.-&gt; S5 -.-&gt; S4
+    S3 -.-&gt; S7
+    S4 --&gt; R
+    classDef confirmed fill:#e8f0f6,stroke:#1f5f8b,color:#111
+    classDef claim fill:#fff4d6,stroke:#b8860b,color:#111,stroke-dasharray:4 3
+    classDef unknown fill:#f0f0f0,stroke:#888,color:#111,stroke-dasharray:2 3</pre></details>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可橫向捲動的表格"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>階段</th>
+<th>證據強度</th>
+<th>依據</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始入侵</td>
+<td>未知</td>
+<td>IDCF 第 3 報：「詳細な影響範囲や侵入経路等については調査中」；沒有公布 CVE</td>
+</tr>
+<tr>
+<td>取得管理權</td>
+<td>攻擊者聲稱</td>
+<td>媒體與社群流傳的主控台截圖出現「雲端被接管」類訊息，官方未認可內容</td>
+</tr>
+<tr>
+<td>部署勒索軟體</td>
+<td>官方確認</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261007002">第 2 報</a></td>
+</tr>
+<tr>
+<td>虛擬機停止</td>
+<td>官方確認</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261008001">第 3 報</a>：四個 zone 的虛擬伺服器停止且無法重啟</td>
+</tr>
+<tr>
+<td>備份被破壞</td>
+<td>聲稱＋推論</td>
+<td>官方只說資料難以復原、只能靠客戶自備備份；「快照與備份被清除」是攻擊者聲稱的數字，沒有獨立證據。若屬實，代表客戶看得到的備份跟生產環境在同一個控制平面底下</td>
+</tr>
+<tr>
+<td>租戶連鎖</td>
+<td>官方確認</td>
+<td>495 家列入影響範圍；JR 東日本、日水物流等案例見上節</td>
+</tr>
+<tr>
+<td>資料外洩</td>
+<td>未確認</td>
+<td>官方沒有宣告外洩；JR 東日本稱無法否定被閱覽或取得</td>
+</tr>
+</tbody>
+</table></div>
+<p>兩點補充：</p>
+<ul>
+<li><strong>「接管基礎設施」只能當聲稱。</strong> 若屬實，代表攻擊者碰到的是管理層，而非個別客戶的虛擬機，四個 zone 同時倒下就說得通；但官方沒有證實。</li>
+<li><strong>各環節的先後順序是推論。</strong> 官方只確認「發生時間 03:40」和「是勒索軟體」，攻擊者從入侵到加密之間做了什麼、花了多久，目前沒有可靠資料。</li>
+</ul>
+<h2 id="受害者的樣子">受害者的樣子</h2>
+<p>勒索軟體打的是雲端業者，倒楣的是一整串租戶。下面這些是有公開公告或報導可查的案例：</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="可橫向捲動的表格"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>單位</th>
+<th>發生了什麼</th>
+<th>來源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>茨城縣與縣警網站</td>
+<td>一度無法瀏覽</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://innovatopia.jp/cyber-security/cyber-security-news/118700/">innovatopia 引共同通信</a></td>
+</tr>
+<tr>
+<td>東京都小平市、東武動物公園、時事通信社</td>
+<td>網站一度無法瀏覽或更新</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://www.nippon.com/en/news/yjj2026100700867/">nippon.com</a></td>
+</tr>
+<tr>
+<td>グリニッジ（Greenwich）</td>
+<td>庫存連動服務「らくらく在庫」等停擺</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://innovatopia.jp/cyber-security/cyber-security-news/118700/">innovatopia</a></td>
+</tr>
+<tr>
+<td>日水物流（ニッスイ集團）</td>
+<td>出入庫作業受阻，10/9 起部分恢復；受害伺服器不含集團管理的個資與客戶資料</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://www.nissui.co.jp/news/20261009.html">Nissui 公告</a></td>
+</tr>
+<tr>
+<td>Six Apart（Movable Type 雲端版）</td>
+<td>IDCF 方案 31 台伺服器受影響，10/8 21 點前全數暫時移到「さくらのクラウド」，用的是 10/7 凌晨 1 點的備份</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://www.sixapart.jp/movabletype/news/2026/10/09-0900.html">Six Apart 第 3 報</a></td>
+</tr>
+<tr>
+<td>UDトーク</td>
+<td>公開對話的 QR code 資訊遺失；單字登錄資料還在伺服器，但個人帳號因綁定的 email 消失而難以對應；預計 10/19 完全復旧</td>
+<td><a target="_blank" rel="noopener noreferrer" href="https://udtalk.jp/a20261007/">UDトーク 公告</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>Six Apart 是這批案例裡少數靠備份撐過來的。從事發到搬完約 41 小時，代價是備份點之後約 2 到 3 小時的資料沒帶過去，而且只是暫定措施，之後視客戶意願再搬回。公告沒有說備份存放在哪裡。</p>
+<h3 id="jr-東日本的郵件名單風險">JR 東日本的郵件名單風險</h3>
+<p><a target="_blank" rel="noopener noreferrer" href="https://www.jreast.co.jp/press/2026/20261009_ho02.pdf">JR 東日本在 10 月 9 日公告</a>，會員郵件配送用的外部服務受 IDCF 事件影響。原文沒有點名這家外部業者。依 <a target="_blank" rel="noopener noreferrer" href="https://www.watch.impress.co.jp/docs/news/2147202.html">Impress Watch 的整理</a>：</p>
+<ul>
+<li>「えきねっと」會員：最多約 <strong>167 萬件</strong>，內容僅限電子郵件地址</li>
+<li>「大人の休日倶楽部」會員：最多約 <strong>39 萬件</strong>，內容含電子郵件地址、會員編號、信用卡有效期限、出生年月日</li>
+<li>姓名、住址、電話、信用卡號都不在可能外洩的範圍裡</li>
+<li>「尚未確認外流」，但無法否定部分郵件地址與郵件紀錄被第三方閱覽或取得</li>
+</ul>
+<p>這裡的「最多 206 萬件」是兩項服務各自上限的<strong>加總</strong>，代表可能受影響的名單上限，不是已證實外洩的人數。「有效期限加生日」不足以盜刷，卻足夠讓釣魚信看起來像真的，收到「會員資料更新」之類的信要多看一眼。</p>
+<figure class="section-figure"><picture><source media="(max-width: 640px)" srcset="images/04-supply-chain-mobile.png"><img src="images/04-supply-chain.png" alt="委外風險因果鏈：JR 東日本委託外部郵件配送服務寄送會員郵件，該服務的伺服器架在 IDCF Cloud，遭勒索攻擊；公告上限約 206 萬件，不是確認外洩人數" loading="lazy" decoding="async" tabindex="0"></picture></figure>
+<details class="alt-diagram"><summary>檢視可互動的文字版流程圖</summary><pre class="mermaid" tabindex="0" role="img" aria-label="JR 東日本郵件名單委外風險因果鏈">flowchart TD
+    JR[&quot;JR 東日本&lt;br&gt;會員資料庫本體（未受害）&quot;] --&gt;|&quot;委託寄送會員郵件&quot;| V[&quot;外部郵件配送服務&quot;]
+    V --&gt;|&quot;伺服器架在&quot;| I[&quot;IDCF Cloud 東日本 Region 1&quot;]
+    X[&quot;勒索攻擊&quot;] --&gt;|&quot;癱瘓並破壞&quot;| I
+    I --&gt;|&quot;郵件名單與紀錄可能被閱覽或取得&quot;| V
+    V -.-&gt;|&quot;JR 東日本公告上限約 206 萬件&quot;| JR</pre></details>
+<p>JR 東日本自己的會員系統沒被打，被打的是<strong>委外廠商租的雲端房東</strong>。風險隔了兩層才落到它頭上。</p>
+<p>View Card、JR 九州、Peach Aviation 等也有流傳的件數（例如 Peach 約 189 萬件），但沒有可核對的公開公告，本文不引用。</p>
+<h2 id="想求償法律上不容易">想求償？法律上不容易</h2>
+<p>以下是契約與法規的整理，<strong>不構成法律意見</strong>。</p>
+<h3 id="idcf-的契約約款怎麼寫">IDCF 的契約約款怎麼寫</h3>
+<p>IDCF 的<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/pdf/common/cloudservices.pdf">雲端服務契約約款</a>（Ver.6.3）第 29 條是免責條款，與這次事件有關的有四處：</p>
+<ol type="1">
+<li><strong>第 1 項第 2 款</strong>：客戶管理或保管的資料外洩、滅失或消失所造成的損害，IDCF 不負責。</li>
+<li><strong>第 1 項第 9 款</strong>：IDCF 已盡善良管理人注意仍無法防禦的第三方不正存取或攻擊，所造成的損害不負責。</li>
+<li><strong>第 3 項</strong>：資料滅失或消失造成的損害、可得利益損失，IDCF 不負賠償責任。</li>
+<li><strong>第 6 項</strong>：因 IDCF 的故意或重大過失而<strong>沒有提供服務</strong>時，前五項規定不適用。</li>
+</ol>
+<p>第 2 項另有但書：服務規格書訂有品質保證（SLA），或個別規程明定要賠的，不適用該項。</p>
+<p>此外，約款的「バックアップ等」條文明定，客戶資料的備份由客戶自己負責，IDCF 對資料的保管、保存、備份不負責任，資料滅失、毀損造成的直接或間接損害也不賠。</p>
+<p>所以客戶想求償，得先過這些免責條文：第 6 項只在「沒有提供服務」時才排除免責，資料滅失算不算「沒有提供服務」並不明確；就算適用，也只是拿掉免責的擋箭牌，還得證明 IDCF 有重大過失、損害與因果。不是說一定求償無門，但門檻高，且要看各客戶實際的契約版本與個別約定。</p>
+<h3 id="日本的個資與通報規定">日本的個資與通報規定</h3>
+<p>這部分是一般法規知識，與本案的連結是推論：</p>
+<ul>
+<li>《個人情報保護法》第 25 條要求委託個資處理時監督受託方；第 23 條是自身的安全管理措置義務。</li>
+<li>發生涉及「不正目的」的外洩事態時，要向個人情報保護委員會（PPC）速報與確報，確報期限為 60 日內（依第 26 條與施行規則第 8 條）。</li>
+<li>《電氣通信事業法》對重大事故有通報與報告義務，IaaS 是否構成「重大事故」要看主管機關認定。IDCF 第 3 報只說已向監督省廳和警視廳報告。</li>
+<li>日本的集體訴訟制度（消費者裁判手續特例法）針對消費者，企業間糾紛不適用。企業受害方只能個別或以共同訴訟處理。</li>
+</ul>
+<h2 id="這件事帶走什麼">這件事帶走什麼</h2>
+<p>IaaS 的分工是：房東管大樓，房客管自己屋內的資料與備份，約款也這樣寫。這次房東的樓層被打掛，租戶只剩自己的備份。幾個具體的檢查項目：</p>
+<ol type="1">
+<li><strong>同平台的快照不算備份。</strong> 快照跟主機放在同一個控制平面底下，控制平面被拿下，兩者一起沒。</li>
+<li><strong>備份要跟生產環境分開。</strong> Six Apart 能在約 41 小時內暫時恢復 31 台，是因為手上有事發前的備份，沒有跟著受害環境一起消失。</li>
+<li><strong>備份要鎖死。</strong> 如果備份帳號和生產環境用同一組權限，攻擊者拿到權限就能一起刪。可考慮不可變異（WORM）儲存，例如 AWS S3 Object Lock 的 Compliance 模式或 GCS Bucket Lock。這是通用做法，不是 IDCF 事件裡有人驗證過的對策。</li>
+<li><strong>演練還原，不只備份。</strong> 備份有沒有，和能不能在幾個小時內還原，是兩回事。</li>
+<li><strong>盤點你的第四方。</strong> 合約裡要問：我委外的廠商，資料實際跑在哪家的雲上？JR 東日本就是這樣中招的。</li>
+<li><strong>管理介面不要裸露。</strong> <a target="_blank" rel="noopener noreferrer" href="https://www.jpcert.or.jp/at/2026/at260030.html">JPCERT/CC 10 月的注意喚起</a>談的是近期日本組織個資外洩的一般攻擊型態，包括管理用 API 的存取控制不足。<strong>這份文件沒有提到 IDCF，不能當成本案的原因。</strong> 但裡面的存取控制建議，對所有人都適用。</li>
+</ol>
+<figure class="section-figure"><picture><source media="(max-width: 640px)" srcset="images/05-backup-mobile.png"><img src="images/05-backup.png" alt="租雲端的人備份五原則：同平台快照不等於備份、備份放在生產環境之外、備份要鎖死不可被改刪、定期演練還原、盤點你的第四方" loading="lazy" decoding="async" tabindex="0"></picture></figure>
+<h2 id="還沒有答案的事">還沒有答案的事</h2>
+<ul>
+<li>入侵路徑：官方還在調查，沒有公布任何 CVE 或具體漏洞。</li>
+<li>攻擊者身分與動機：沒有可信的歸因。</li>
+<li>受害規模的細項：495 家裡有多少家的資料實際在四個 zone，官方沒有公布。</li>
+<li>郵件名單等個資是否真的外流：目前都是「可能性」。</li>
+<li>攻擊者宣稱的數字：沒有獨立證據。</li>
+<li>復原時程：截至 10 月 10 日，官方尚未公布。</li>
+<li>日本法規在本案的實際適用：要看主管機關後續的認定。</li>
+</ul>
+<h2 id="來源">來源</h2>
+<p><strong>官方公告（第一手）</strong></p>
+<ul>
+<li>IDC Frontier <a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261007001">第 1 報（10/7）</a>、<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261007002">第 2 報（10/7）</a>、<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261008001">第 3 報（10/8）</a>、<a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/news/topics/20261009001">第 4 報（10/9）</a></li>
+<li>IDC Frontier <a target="_blank" rel="noopener noreferrer" href="https://www.idcf.jp/pdf/common/cloudservices.pdf">クラウドサービスに関する契約約款 Ver.6.3（PDF）</a></li>
+<li>東日本旅客鉄道（JR 東日本）<a target="_blank" rel="noopener noreferrer" href="https://www.jreast.co.jp/press/2026/20261009_ho02.pdf">2026/10/9 公告（PDF）</a></li>
+<li>ニッスイ <a target="_blank" rel="noopener noreferrer" href="https://www.nissui.co.jp/news/20261009.html">日水物流株式会社におけるシステム障害について（第2報）</a>，2026/10/9</li>
+<li>Six Apart <a target="_blank" rel="noopener noreferrer" href="https://www.sixapart.jp/movabletype/news/2026/10/09-0900.html">Movable Type クラウド版における IDCF クラウド障害の影響と対応について（第3報）</a>，2026/10/9</li>
+<li>UDトーク <a target="_blank" rel="noopener noreferrer" href="https://udtalk.jp/a20261007/">【重要】UDトークのシステム障害と復旧状況</a>，2026/10/7 起、10/9 更新</li>
+<li>JPCERT/CC <a target="_blank" rel="noopener noreferrer" href="https://www.jpcert.or.jp/at/2026/at260030.html">JPCERT-AT-2026-0030</a>，2026/10/8 公開、10/9 更新（與 IDCF 無直接關係）</li>
+</ul>
+<p><strong>媒體報導（可靠二手）</strong></p>
+<ul>
+<li>Impress Watch <a target="_blank" rel="noopener noreferrer" href="https://www.watch.impress.co.jp/docs/news/2147202.html">JR東日本、「えきねっと」など206万件漏えいの可能性</a></li>
+<li>innovatopia <a target="_blank" rel="noopener noreferrer" href="https://innovatopia.jp/cyber-security/cyber-security-news/118700/">IDCFクラウドにランサムウェア攻撃、495の企業・自治体に影響</a>，2026/10/8</li>
+<li>nippon.com <a target="_blank" rel="noopener noreferrer" href="https://www.nippon.com/en/news/yjj2026100700867/">Cyberattack on SoftBank Unit Affects Local Govt, Corporate Websites</a>，2026/10/7</li>
+<li>BleepingComputer <a target="_blank" rel="noopener noreferrer" href="https://www.bleepingcomputer.com/news/security/ransomware-attack-disrupts-japans-idcf-cloud-used-by-govt-clients/">Ransomware attack disrupts Japan's IDCF Cloud used by govt clients</a></li>
+</ul>
+
+</main>
+<footer>本頁為導讀整理，非 IDC Frontier 或任何當事單位的官方內容。事件仍在進行，請以官方最新公告為準。</footer>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="圖片放大檢視" tabindex="-1"><span class="hint">點擊或按 Esc 關閉</span><img src="" alt=""></div>
+<script>
+(function(){
+  var lb=document.getElementById("lightbox"),li=lb.querySelector("img"),last=null;
+  function open(img){last=img;li.src=img.currentSrc||img.src;li.alt=img.alt;lb.classList.add("open");lb.focus();}
+  function close(){lb.classList.remove("open");li.src="";if(last)last.focus();}
+  document.querySelectorAll("figure.section-figure img,figure.summary-figure img").forEach(function(img){
+    img.addEventListener("click",function(){open(img);});
+    img.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open(img);}});
+  });
+  lb.addEventListener("click",close);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&lb.classList.contains("open"))close();});
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js" integrity="sha384-WmdflGW9aGfoBdHc4rRyWzYuAjEmDwMdGdiPNacbwfGKxBW/SO6guzuQ76qjnSlr" crossorigin="anonymous"></script>
+<script>
+(function(){
+  if(!window.mermaid)return;
+  var dark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({startOnLoad:false,theme:dark?"dark":"neutral",flowchart:{htmlLabels:true,useMaxWidth:true}});
+  var open=[],hidden=[];
+  document.querySelectorAll("pre.mermaid").forEach(function(n){(n.closest("details")?hidden:open).push(n);});
+  if(open.length)mermaid.run({nodes:open});
+  document.querySelectorAll("details.alt-diagram").forEach(function(d){
+    d.addEventListener("toggle",function(){
+      var n=d.querySelector("pre.mermaid");
+      if(d.open&&n&&!n.dataset.processed)mermaid.run({nodes:[n]});
+    });
+  });
+})();
+</script>
+</body>
+</html>
